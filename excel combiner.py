@@ -46,6 +46,8 @@ def workWithFile():
             if j[0] is not None:
                 wsResult.cell(row=j[1], column=14).value = j[0]
                 row += 1
+            else:
+                wsResult.cell(row=j[1], column=14).value = "Прикрепление не указано"
         print(name + " Обработка закончена \n")
     wsResult.cell(row=1, column=14).value = "Прикрепление"
     wbResult.save(directory + str(fileName) + '_СВОД.xlsx')
@@ -60,7 +62,6 @@ def svod():
 
 
 def createMOFile():
-    filteredItem = ""
     result = {}
 
     lists = list(svod())
@@ -92,16 +93,11 @@ def createMOFile():
             cleanName = re.sub(r'[^а-яА-Я0-9№ ]+', '', mo)
             wbMo.save(directory + "MO/" + cleanName + '.xlsx')
 
-    # print(result.get('ГБУЗ АО «Бюро судебно-медицинской экспертизы»'))
-    # for i in result:
-    #     print(result[i])
-    # print(result.items())
-    # print(result["Наименование учреждения"])
-
 
 def main():
-    workWithFile()
-    createMOFile()
+    workWithFile()  # собираем сводный файл
+    createMOFile()  # Разбиваем сводный файл по папкам
+    input("Нажмите любую кнопку для выхода из программы.")
 
 
 if __name__ == '__main__':
